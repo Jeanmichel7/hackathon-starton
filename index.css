@@ -31,3 +31,15 @@
   padding: 30px;
   border-radius: 5px;
 }
+
+#item-add {
+  min-width: 200px;
+  height: 1000px;
+
+  margin-left: 5px;
+}
+
+.item-add {
+  text-align: center;
+  height: 287px;
+}

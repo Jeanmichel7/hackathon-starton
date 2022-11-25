@@ -109,6 +109,18 @@ async function display_all_products() {
     </div> `;
   }
 
+  document.getElementById("all-products").innerHTML += `
+  <div class="col-auto">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Add a product</h5>
+        <p class="card-text item-add">Add a product to the marketplace</p>
+        <a href="#add-product" class="btn btn-primary">Add</a>
+      </div>
+    </div>
+  </div> `;
+
+
   for (let i = 0; i < nbProducts; i++) {
     let res2 = await readSmartContractFunction("binance-testnet", addressOfSmartContract, "products", [i]);
     let product = res2.data.response;
@@ -147,14 +159,15 @@ async function display_all_products() {
             <input class="form-control" id="wallet-id" placeholder="Enter Wallet">
           </div>
           <button id="btn-submit-review" class="btn btn-primary mb-2">Submit</button>
-          <button id="btn-get-hash" class="btn btn-primary mb-2">Get hash</button>
+          <button id="btn-get-hash" class="btn btn-danger mb-2">Get password</button>
           <span id="hash"></span>
         </form> 
       </div>`;
 
       document.getElementById("btn-get-hash").addEventListener("click", async function (e) {
         e.preventDefault();
-        await displayHash(i);
+        let res = await getHash(i);
+        document.getElementById("pwd-review").value = res;
       });
 
       document.getElementById("btn-submit-review").addEventListener("click", async function(e) {
@@ -178,13 +191,13 @@ async function display_all_products() {
   }
 }
 
-async function displayHash(index) {
+async function getHash(index) {
   let addressOfSmartContract = JSON.parse(localStorage.getItem('smartContract')).smartContract.address;
   let res3 = await readSmartContractFunction("binance-testnet", addressOfSmartContract, "products", [index]);
   let product2 = res3.data.response;
   let hash = await addHash(product2[0], product2[2])
-  let spanHash = document.getElementById("hash");
-  spanHash.innerHTML = hash ;
+  // let spanHash = document.getElementById("hash");
+  // spanHash.innerHTML = hash ;
   return hash;
 }
 
