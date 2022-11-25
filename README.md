@@ -20,6 +20,7 @@ We learn some things like :
 - Front End language
 - Team workflow
 ## Project submission
+[Presentation video](https://www.veed.io/view/9996688b-1bb6-437b-b103-63ad4003e6a7?sharingWidget=true&panel=share)
 # What is Faithful
 Fathful is a blockchain powered review system.
 Faithful use is own token, the FFUL.
