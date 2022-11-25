@@ -11,7 +11,7 @@ import { bytesCode, ABI } from './controllers/importSmartContract.js';
 async function importSc() {
   let params = [];
   let network = "binance-testnet";
-  let name = "scname";
+  let name = "FaithFul";
   let address = "0x2C5C71b363FFFEd2CFC1cEfEeb661d4B60FF7c39"; // a modifier
   let allMySc = await getSc(network, name);
 
