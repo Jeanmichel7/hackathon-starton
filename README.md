@@ -41,7 +41,7 @@ FFUL is used to reward the reviewer and is needed by anyone who want to publish 
 - 100 Million token for the team
 - 300 Million for give to the ground breaking company (equal to 300 products)
 - 600 Million to airdrop to the first users
-## Actual problem
+## Current problem
 - Need a wallet connect button to buy and add a new product on the smart contract and some other utility fonctions on the frontend.
 - If a user send a review, the file on IPFS is changed. If a second user send a new review quickly (assuming the first transaction not yet validate), he got the old CID from the blockchain and send the transaction which flush the previous review.
 ## Starton can upgrade
