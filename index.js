@@ -12,7 +12,7 @@ async function importSc() {
   let params = [];
   let network = "binance-testnet";
   let name = "scname";
-  let address = "0xB8c9627627a6F1F78CD2b9d172A2816529F313B8"; // a modifier
+  let address = "0x2C5C71b363FFFEd2CFC1cEfEeb661d4B60FF7c39"; // a modifier
   let allMySc = await getSc(network, name);
 
   for(let i = 0; i < allMySc.length; i++) {
@@ -22,10 +22,13 @@ async function importSc() {
     }
   }
 
+  document.getElementById("loadSC").innerHTML = "Loading...";
+
   let res = await deploySmartContract(ABI, params, network, bytesCode.toString(), name, address);
   if (res.status == 201) {
     console.log("Smart contract imported : ", res.data);
     localStorage.setItem('smartContract', JSON.stringify(res.data));
+
     return res.data;
   }
   else {
@@ -78,10 +81,6 @@ function displayComment(data) {
         <p>${data[item]}</p>
       </div> `;
     });
-
-    // div.innerHTML += `
-    //   </div>
-    // `;
   }
 }
 
@@ -313,6 +312,12 @@ checkConnection();
 connectWallet("Wallet Address");
 if (localStorage.getItem('smartContract') == undefined) {
   await importSc();
+  window.location.reload();
 }
+else {
+  let sca = JSON.parse(localStorage.getItem('smartContract'));
+  document.getElementById("sca").innerHTML = "Address Sc : " + sca.smartContract.address;
+}
+
 
 display_all_products();

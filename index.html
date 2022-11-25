@@ -10,8 +10,7 @@
   <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="views/communStyle.css">
 
-<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -61,6 +60,7 @@
   <main>
     <div class="container">
       <h1>Faithful Review System</h1>
+      <div id="loadSC"></div>
       <section id="all-products" class="row"></section>
       <section id="all-com" class="container"></section>
       <section id="all-reviews" class="row"></section>
@@ -68,6 +68,8 @@
   </main>
 
   <footer class="bg-light text-center text-lg-start">
+    <p>Address Wallet : 0x2C5C71b363FFFEd2CFC1cEfEeb661d4B60FF7c39</p>
+    <p id="sca"></p>
     <div class="text-center" style="background-color: rgba(0, 0, 0, 0.2)">
       © 2022 Hackathon project
     </div>

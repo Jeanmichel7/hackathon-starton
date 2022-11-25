@@ -34,7 +34,7 @@ export async function importSmartContract(abi, network, name, address, descripti
 export async function callSmartContractFunction(network, address, fctName, params) {
   const res = await http.post("/smart-contract/" + network + "/" + address + "/call", {
     "functionName": fctName,
-    "signerWallet": "0xB8c9627627a6F1F78CD2b9d172A2816529F313B8",
+    "signerWallet": "0x2C5C71b363FFFEd2CFC1cEfEeb661d4B60FF7c39",
     "params": params
   })
   .catch(function (error) { return error; });

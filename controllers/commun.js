@@ -15,7 +15,7 @@ export let networks = [
 export const http = axios.create({
   baseURL: "https://api.starton.io/v2",
   headers: {
-    "x-api-key": 'a9Wp0e1aqMX8pmxvrNFImYwh1Pe3xU7u',
+    "x-api-key": 'sk_live_a48ec669-5198-4916-b56f-d9d35db92f6d',
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
   },
@@ -24,7 +24,7 @@ export const http = axios.create({
 export const httpB = axios.create({
   baseURL: "https://api.starton.io/v2",
   headers: {
-    "x-api-key": 'a9Wp0e1aqMX8pmxvrNFImYwh1Pe3xU7u',
+    "x-api-key": 'sk_live_a48ec669-5198-4916-b56f-d9d35db92f6d',
     "Access-Control-Allow-Origin": "*"
   }
 })
@@ -32,7 +32,7 @@ export const httpB = axios.create({
 export const httpA = axios.create({
   baseURL: "https://api.starton.io/v3",
   headers: {
-    "x-api-key": 'a9Wp0e1aqMX8pmxvrNFImYwh1Pe3xU7u',
+    "x-api-key": 'sk_live_a48ec669-5198-4916-b56f-d9d35db92f6d',
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
   },

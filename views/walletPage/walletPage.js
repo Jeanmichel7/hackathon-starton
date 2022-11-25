@@ -3,10 +3,6 @@ import { getAllSc, getScFunctions } from '../../controllers/smartContract.js';
 import { getWalletBalance } from '../../controllers/wallet.js';
 
 
-// let address = "0xB8c9627627a6F1F78CD2b9d172A2816529F313B8";
-// let scAddress = "0xCc7bb2D219A0FC08033E130629C2B854b7bA9195";
-// let network;
-
 /* ********************************************* */
 /*                                               */
 /*                Define function                */
