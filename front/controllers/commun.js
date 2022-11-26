@@ -30,7 +30,7 @@ export const httpA = axios.create({
     "Access-Control-Allow-Origin": "*",
   },
 })
-
+ 
 export const httpB = axios.create({
   baseURL: "https://api.starton.io/v2",
   headers: {
@@ -94,6 +94,12 @@ export let listpwd = [];
 
 
 
+
+
+
+
+
+
 /* test */
 export const MyAPI = axios.create({
   baseURL: 'http://localhost:3000'
@@ -102,22 +108,33 @@ export const MyAPI = axios.create({
 export const MyAPIPost = axios.create({
   baseURL: 'http://localhost:3000',
   headers: {
-    "Content-Type": "text/plain",
+    "Content-Type": "application/json",
     "Access-Control-Allow-Origin": '*',
-    // "Access-Control-Allow-Headers": "*",
     "Access-Control-Allow-Headers": 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization',
     "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
   },
 })
 
-export async function getAllProducts(request) {
-  console.log("request : ", request);
+export async function getAllProducts() {
   const response = await MyAPI.get('/allProducts');
-  console.log("res : ", response);
   return response;
 }
 
-export async function test(request) {
-  const response = await MyAPI.get('/gettest');
+export async function getProductParam(indice) {
+  const response = await MyAPI.get('/product/' + indice);
+  return response.data;
+}
+
+export async function getProduct(indice) {
+  const response = await MyAPIPost.post('/product', {
+    id: indice
+  });
+  // console.log("ret final 2 : ", response);
+  return response.data;
+}
+
+export async function postProduct(data) {
+  // console.log("body before req: ", indice);
+  const response = await MyAPIPost.post('/addProduct', data);
   return response.data;
 }

@@ -10,6 +10,15 @@ module.exports = {
     // .catch(function (error) { return error; });
     // return res;
   },
+
+  getIpfsData: async (cid) => {
+    console.log("cid reviews : ", cid);
+
+    // let cid = req.body.cid;
+    const res = await ipfs.get(cid)
+    .catch(function (error) { return error; });
+    return res;
+  }
   // uploadToIpfs: async function uploadToIpfs(filename, jsonobj) {
   //   const res = await httpA.post("/ipfs/json", {
   //     "name" : filename,

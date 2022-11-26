@@ -1,11 +1,16 @@
 // Imports
 const express = require('express');
 const router = express.Router();
-const ctrlProduct = require('../controllers/products.js');
 
-// Users routes
+const ctrlProduct = require('../controllers/products.js');
+const ctrlReview = require('../controllers/reviews.js');
+
+// routes
 router.get('/allProducts', ctrlProduct.getAllProducts);
 router.get('/product/:productId', ctrlProduct.getProductParam);
 router.post('/product',ctrlProduct.getProductId);
+// router.post('/addProduct', ctrlProduct.addProduct);
+
+router.get('/product/reviews', ctrlReview.getReviews);
 
 module.exports = router;

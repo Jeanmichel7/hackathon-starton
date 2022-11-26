@@ -308,20 +308,20 @@ async function validHash(hashobject, passwd) {
 /*                                               */
 /* ********************************************* */
 
-checkConnection();
+// checkConnection();
 
-connectWallet("Wallet Address");
-if (localStorage.getItem('smartContract') == undefined) {
-  await importSc();
-  window.location.reload();
-}
-else {
-  let sca = JSON.parse(localStorage.getItem('smartContract'));
-  document.getElementById("sca").innerHTML = "Address Sc : " + sca.smartContract.address;
-}
+// connectWallet("Wallet Address");
+// if (localStorage.getItem('smartContract') == undefined) {
+//   await importSc();
+//   window.location.reload();
+// }
+// else {
+//   let sca = JSON.parse(localStorage.getItem('smartContract'));
+//   document.getElementById("sca").innerHTML = "Address Sc : " + sca.smartContract.address;
+// }
 
 
-display_all_products();
+// display_all_products();
 
 
 
@@ -339,15 +339,66 @@ display_all_products();
 
 
 /* test */
-import {test, getAllProducts} from './controllers/commun.js';
+import {getAllProducts, getProductParam, getProduct, postProduct} from './controllers/commun.js';
+// import { getReviews } from '../back/controllers/reviews.js';
 
-let testBtn = document.getElementById("test-btn");
-testBtn.addEventListener("click", async function(e) {
-  e.preventDefault();
+// let testBtn = document.getElementById("test-btn");
+// testBtn.addEventListener("click", async function(e) {
+  // e.preventDefault();
   let testValue = document.getElementById("test-value").value.toString();
 
-  let res = await getAllProducts(testValue);
+  let res = await getAllProducts();
   // let res = await testPost(testValue);
-  console.log("res final : ", res);
-  document.getElementById("test-rendu").innerHTML = res.data;
-});
+  // console.log("all products : ", res);
+
+
+  // iter each product
+  for (let i = 0; i < res.data.length; i++) {
+    let product = res.data[i];
+    document.getElementById("test-rendu").innerHTML += `
+    <div id="item-id-${product[0]}" class="col-auto">
+      <p class="card-text">${product[1]}</p>
+      <a href="#all-reviews" id="item-${product[0]}" class="btn btn-primary">Reviews</a>
+    </div> `;
+  }
+
+
+  // add event listener to each product
+  for (let i = 0; i < res.data.length; i++) {
+    let product = res.data[i];
+    let item = document.getElementById("item-" + product[0]);
+    item.addEventListener("click", async function(e) {
+      e.preventDefault();
+
+      let produit = await getProduct(i);
+      console.log("ret get All products : ", product);
+
+      document.getElementById("test-rendu").innerHTML += `
+      <div id="item-id-${produit[0]}" class="col-auto">
+        <p class="card-text">${produit[1]}</p>
+        <a href="#all-reviews" id="item-${produit[0]}" class="btn btn-primary">Reviews</a>
+      </div> `;
+
+
+      // let comments = await getReviews(produit[0]);
+    });
+  }
+
+
+  // document.getElementById("add-product").addEventListener("click", async function(e) {
+  //   e.preventDefault();
+
+  //   let data = {
+  //     name: "name",
+  //     description: "descirption",
+  //     img_cid : "",
+  //     review_cid: "test",
+  //   }
+
+  //   let res = await postProduct(data);
+
+
+
+  // });
+
+// });
