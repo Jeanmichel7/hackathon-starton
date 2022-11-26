@@ -46,8 +46,6 @@ export const ipfs = axios.create({
 })
 
 /* routes */
-
-
 export async function smartContractTemplate () {
   const response = await http.get('/smart-contract-template');
   return response.data;
@@ -112,15 +110,14 @@ export const MyAPIPost = axios.create({
   },
 })
 
-export async function test(request) {
-  const response = await MyAPI.get('/gettest');
-  console.log("req : ", request);
-  return response.data;
+export async function getAllProducts(request) {
+  console.log("request : ", request);
+  const response = await MyAPI.get('/allProducts');
+  console.log("res : ", response);
+  return response;
 }
 
-export async function testPost(request) {
-  console.log("recu ici : ", request);
-  const response = await MyAPIPost.post('/posttest', request);
-  console.log("renvoi : ", response);
-  return response;
+export async function test(request) {
+  const response = await MyAPI.get('/gettest');
+  return response.data;
 }

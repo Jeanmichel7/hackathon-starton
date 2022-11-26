@@ -13,7 +13,7 @@ async function importSc() {
   let params = [];
   let network = "binance-testnet";
   let name = "FaithFul";
-  let address = "0x2C5C71b363FFFEd2CFC1cEfEeb661d4B60FF7c39"; // a modifier
+  let addressWallet = "0x2C5C71b363FFFEd2CFC1cEfEeb661d4B60FF7c39"; // a modifier
   let allMySc = await getSc(network, name);
 
   for(let i = 0; i < allMySc.length; i++) {
@@ -25,7 +25,7 @@ async function importSc() {
 
   document.getElementById("loadSC").innerHTML = "Loading...";
 
-  let res = await deploySmartContract(ABI, params, network, bytesCode.toString(), name, address);
+  let res = await deploySmartContract(ABI, params, network, bytesCode.toString(), name, addressWallet);
   if (res.status == 201) {
     console.log("Smart contract imported : ", res.data);
     localStorage.setItem('smartContract', JSON.stringify(res.data));
@@ -338,18 +338,16 @@ display_all_products();
 
 
 
-/* test */  
-import {test, testPost} from './controllers/commun.js';
+/* test */
+import {test, getAllProducts} from './controllers/commun.js';
 
 let testBtn = document.getElementById("test-btn");
 testBtn.addEventListener("click", async function(e) {
   e.preventDefault();
   let testValue = document.getElementById("test-value").value.toString();
-  console.log("input : ", testValue);
 
-
-  let res = await testPost(testValue);
+  let res = await getAllProducts(testValue);
   // let res = await testPost(testValue);
   console.log("res final : ", res);
-  document.getElementById("test-rendu").innerHTML = res;
+  document.getElementById("test-rendu").innerHTML = res.data;
 });
