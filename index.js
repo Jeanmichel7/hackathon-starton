@@ -2,6 +2,7 @@ import {checkConnection, getBnbBalance, listpwd, ipfs} from './controllers/commu
 import {getSc, deploySmartContract, readSmartContractFunction, callSmartContractFunction, uploadToIpfs, pinIpfs, deletePinIpfs, getIpfs, getIpfsData} from './controllers/smartContract.js';
 import { bytesCode, ABI } from './controllers/importSmartContract.js';
 
+
 /* ********************************************* */
 /*                                               */
 /*                Define function                */
@@ -321,3 +322,34 @@ else {
 
 
 display_all_products();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* test */  
+import {test, testPost} from './controllers/commun.js';
+
+let testBtn = document.getElementById("test-btn");
+testBtn.addEventListener("click", async function(e) {
+  e.preventDefault();
+  let testValue = document.getElementById("test-value").value.toString();
+  console.log("input : ", testValue);
+
+
+  let res = await testPost(testValue);
+  // let res = await testPost(testValue);
+  console.log("res final : ", res);
+  document.getElementById("test-rendu").innerHTML = res;
+});

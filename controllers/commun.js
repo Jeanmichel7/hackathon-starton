@@ -12,8 +12,18 @@ export let networks = [
   "polygon-mumbai"
 ];
 
+/* instance axios */
 export const http = axios.create({
   baseURL: "https://api.starton.io/v2",
+  headers: {
+    "x-api-key": 'sk_live_a48ec669-5198-4916-b56f-d9d35db92f6d',
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+  },
+})
+
+export const httpA = axios.create({
+  baseURL: "https://api.starton.io/v3",
   headers: {
     "x-api-key": 'sk_live_a48ec669-5198-4916-b56f-d9d35db92f6d',
     "Content-Type": "application/json",
@@ -29,19 +39,13 @@ export const httpB = axios.create({
   }
 })
 
-export const httpA = axios.create({
-  baseURL: "https://api.starton.io/v3",
-  headers: {
-    "x-api-key": 'sk_live_a48ec669-5198-4916-b56f-d9d35db92f6d',
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-  },
-})
 
 export const ipfs = axios.create({
   baseURL: "https://ipfs.eu.starton.io/ipfs/",
   headers: {},
 })
+
+/* routes */
 
 
 export async function smartContractTemplate () {
@@ -88,3 +92,35 @@ export async function checkConnection() {
 
 export let listpwd = [];
 
+
+
+
+
+/* test */
+export const MyAPI = axios.create({
+  baseURL: 'http://localhost:3000'
+})
+
+export const MyAPIPost = axios.create({
+  baseURL: 'http://localhost:3000',
+  headers: {
+    "Content-Type": "text/plain",
+    "Access-Control-Allow-Origin": '*',
+    // "Access-Control-Allow-Headers": "*",
+    "Access-Control-Allow-Headers": 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization',
+    "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+  },
+})
+
+export async function test(request) {
+  const response = await MyAPI.get('/gettest');
+  console.log("req : ", request);
+  return response.data;
+}
+
+export async function testPost(request) {
+  console.log("recu ici : ", request);
+  const response = await MyAPIPost.post('/posttest', request);
+  console.log("renvoi : ", response);
+  return response;
+}
