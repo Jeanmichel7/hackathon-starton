@@ -5,6 +5,25 @@
 - Smart contract is auto imported and deployed from bytecode in the frontend (time reason)
 - Using the Jean Michel Starton API Key on his public Github 😉
 - Enjoy clicking on the button to interact with the BNB Testnet SmartContract
+
+### Requirement
+- NodeJS
+- NPM
+- Live-server (npm install live-server)
+- Metamask (Chrome extension)
+- Binance Testnet account
+
+### Frontend
+- cd frontend
+- yarn install
+- yarn start
+
+### Backend
+- cd backend
+- npm install
+- npm run start
+
+
 ## Problem
 Faithful solve the fake review and review bombing problem.
 ## Solution

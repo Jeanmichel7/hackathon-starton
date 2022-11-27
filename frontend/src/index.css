@@ -1,0 +1,115 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&family=Varela+Round&display=swap');
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  overscroll-behavior: none;
+  font-family: 'Nunito', sans-serif;
+}
+
+body {
+  background: var(--light);
+  color: var(--green);
+  min-height: 100vh;
+  font-size: 16px;
+  line-height: 1.2;
+  overscroll-behavior: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  font-family: 'Varela Round', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+}
+
+section {
+  overflow: hidden;
+}
+
+input,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+input:focus-within, input:hover,
+button:focus-within,
+button:hover {
+  outline: none;
+}
+input:focus-visible,
+button:focus-visible {
+  outline: auto 5px -webkit-focus-ring-color;
+}
+
+button {
+  user-select: none;
+}
+
+/*input {
+  -webkit-appearance: none;
+}*/
+
+ul {
+  list-style: none;
+}
+
+.img-wrapper img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.mainPadding {
+  padding-left: var(--paddingX);
+  padding-right: var(--paddingX);
+}
+
+html {
+  --k2: 2560px;
+  --desktop: 1920px;
+  --laptopXL: 1680px;
+  --laptopL: 1640px;
+  --laptopM: 1440px;
+  --laptopS: 1280px;
+  --tabletL: 1024px;
+  --tablet: 992px;
+  --tabletS: 600px;
+  --mobileL: 480px;
+  --mobileM: 375px;
+  --mobileS: 320px;
+  --paddingX: 65px;
+  --headerHeight: 80px;
+  --basicTransition: 0.4s;
+  --mediumTransition: 0.7s;
+  --longTransition: 1s;
+  --basicEase: cubic-bezier(0.33, 0, 0.13, 1);
+  --secondaryEase: cubic-bezier(0.33, 0, 0.67, 1);
+  --mainTransition: var(--basicTransition) var(--basicEase);
+  --fadeTransition: var(--longTransition) var(--basicEase);
+  --white: #fff;
+  --black: #1e1e1e;
+  --dark: #222222;
+  --green: #A5FFD6;
+  --red-shade: #6b060421;
+  --light: #183059;
+  /* --light: #858AE3;
+  --light: #4E148C; */
+  --light: rgb(238, 238, 255);
+  --grey: #787878;
+}
