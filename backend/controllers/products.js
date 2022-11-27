@@ -1,4 +1,4 @@
-let scAddress = "0x5F9A9EeBa8914e95E02C1c69792e2b1C14440bCE";
+let scAddress = process.env.SC_ADDRESS;
 const { readSmartContractFunction, callSmartContractFunction, uploadToIpfs } = require('../controllers/commun');
 const { getIpfsData, genPassAndHash } = require('../controllers/reviews');
 const fs = require('fs');
@@ -47,11 +47,8 @@ module.exports = {
   },
 
   generatePwd: async (req, res) => {
-
-    // recup l'id du produit du front
-    // let id = req.body.id;
-    let id = 1;
-
+    // console.log("back generatePwd body : ", req.body);
+    let name = req.body.name;
     let tabHash = {};
     let tabPwd = "";
 
@@ -61,18 +58,13 @@ module.exports = {
       tabPwd += ret[0] + "\n";
       tabHash[i] = ret[1];
     }
-
     let hashFile = await uploadToIpfs("hashFile", tabHash);
-    console.log("ret hashFile : ", hashFile.data);
 
     //composer file de tout les pass -> github
-    fs.appendFile('P' + id + '_PasswordFileProduct.txt', tabPwd, function (err) {
+    fs.appendFile(name + '_PasswordFileProduct.txt', tabPwd, function (err) {
       if (err) throw err;
       console.log('Saved!');
     });
-
-
-    // return CID du post ifps
     return res.status(200).json(hashFile.data.cid);
   }
 }

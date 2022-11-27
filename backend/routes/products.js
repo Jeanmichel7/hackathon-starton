@@ -9,7 +9,7 @@ const ctrlReview = require('../controllers/reviews.js');
 router.get('/allProducts', ctrlProduct.getAllProducts);
 router.get('/product/:productId', ctrlProduct.getProductParam);
 router.post('/product',ctrlProduct.getProductId);
-router.get('/generatePwd', ctrlProduct.generatePwd);
+router.post('/generatePwd', ctrlProduct.generatePwd);
 
 router.get('/product/reviews', ctrlReview.getReviews);
 router.post('/product/addReview', ctrlReview.addReview);

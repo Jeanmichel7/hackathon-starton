@@ -23,18 +23,19 @@ async function SCgetFFULBalance() {
 	return ffulbalance;
 }
 
-async function SCaddProduct(name, details, imageCID, hashCID) {
+export async function SCaddProduct(name, details, imageCID, hashCID) {
 	if (name.length < 3 || name.length > 24) {
 		console.log("Product name must be between 3 and 24 characters");
 		return false;
 	}
-	if (details.length >= 8) {
+	if (details.length <= 8) {
 		console.log("Product details must be at least 8 characters");
 		return false;
 	}
 	await faithfulContract.addProduct(name, details, imageCID, hashCID);
 	return true;
 }
+
 /*
 async function SCgetProduct(id) {
 	let product = await faithfulContract.products(id);

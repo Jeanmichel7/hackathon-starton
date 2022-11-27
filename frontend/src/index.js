@@ -8,24 +8,31 @@ import './index.css'
 import Header from './components/Header';
 import ProductsContainer from './containers/ProductsContainer';
 import SectionSeparator from './components/SectionSeparator';
-
 import axios from 'axios';
+
+/* to move */
+import { SCaddProduct } from './services/wallet.service'
+
 
 const store = configureStore();
 
-function maFunction () {
-
-
+async function getHashCid(name) {
   const instance = axios.create({
     baseURL: 'http://localhost:4242',
   });
+  let ret = await instance.post('/generatePwd', {
+    name: name
+  });
+  console.log("ret getpwd : ", ret);
+  return ret.data
+}
 
-  instance.get('/generatePwd');
-
-
-
-
-  // console.log('maFunction');
+async function addProduct() {
+  let name = "TEMP NAME";
+  let details = "TEMP DETAILSQWERTYUIOP";
+  let imageCID = "IMAGE RECUPERER DE GLISSER DEPOSER";
+  let hashCID = await getHashCid(name);
+  SCaddProduct(name, details, imageCID, hashCID);
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -36,9 +43,8 @@ root.render(
       <SectionSeparator name="PRODUCTS"/>
 
 
+      <button onClick={addProduct} value={1}>Genereate pass</button>
 
-
-      <button onClick={maFunction}>Genereate pass</button>
 
       <ProductsPage />
     </Provider>
