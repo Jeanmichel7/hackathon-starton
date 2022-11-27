@@ -340,12 +340,14 @@ async function validHash(hashobject, passwd) {
 
 /* test */
 import {getAllProducts, getProductParam, getProduct, postProduct} from './controllers/commun.js';
+import {addReviews } from './controllers/commun.js';
+
 // import { getReviews } from '../back/controllers/reviews.js';
 
 // let testBtn = document.getElementById("test-btn");
 // testBtn.addEventListener("click", async function(e) {
   // e.preventDefault();
-  let testValue = document.getElementById("test-value").value.toString();
+  // let testValue = document.getElementById("test-value").value.toString();
 
   let res = await getAllProducts();
   // let res = await testPost(testValue);
@@ -374,12 +376,26 @@ import {getAllProducts, getProductParam, getProduct, postProduct} from './contro
       console.log("ret get All products : ", product);
 
       document.getElementById("test-rendu").innerHTML += `
-      <div id="item-id-${produit[0]}" class="col-auto">
-        <p class="card-text">${produit[1]}</p>
-        <a href="#all-reviews" id="item-${produit[0]}" class="btn btn-primary">Reviews</a>
-      </div> `;
+
+      <form id="form-add-review-${produit[0]}" class="form-add-review">
+        <div class="form-group">
+          <label for="review">Review</label>
+          <input type="text" class="form-control" id="review" placeholder="Enter review">
+        </div>
+        <button id="btn-submit-review" type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      `;
+
+      let form = document.getElementById("form-add-review-" + produit[0]);
+      form.addEventListener("submit", async function(e) {
+        e.preventDefault();
+        let review = document.getElementById("review").value.toString();
+        console.log("review : ", review);
 
 
+        let res = await addReviews(review, i);
+        console.log("res final front: ", res);
+      });
       // let comments = await getReviews(produit[0]);
     });
   }

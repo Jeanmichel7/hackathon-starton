@@ -2,6 +2,8 @@ let scAddress = "0x5F9A9EeBa8914e95E02C1c69792e2b1C14440bCE";
 const { readSmartContractFunction, callSmartContractFunction } = require('../controllers/commun');
 const { getIpfsData } = require('../controllers/reviews');
 
+/* temporaire */
+
 
 module.exports = {
   getAllProducts: async (req, res) => {
@@ -45,41 +47,5 @@ module.exports = {
     res.status(200).json(product);
   },
 
-  // addProduct: async (req, res) => {
-  //   console.log("req body : ", req.body);
-
-  //   let params = [];
-  //   params.push(req.body.name);
-  //   params.push(req.body.description);
-  //   params.push(req.body.img_cid);
-  //   params.push(req.body.review_cid);
-  //   // mdp
-
-  //   console.log("params function : ", params);
-  //   let ret = await callSmartContractFunction("binance-testnet", scAddress, "addProduct", params);
-  //   console.log("ret add product : ", ret);
-
-  //   // res.status(200).json({message: "product added"});
-  // },
-
-  AddReview: async (req, res) => {
-    // put the review in the blockchain
-      // newCIDreview = await addReviewToIPFS(req.body.review);
-
-    // delete hash to IPFS
-
-
-    // jsais plus
-
-
-    let params = [];
-    let ret = await readSmartContractFunction(
-      "binance-testnet",
-      scAddress,
-      "setAllCID",
-      params
-    );
-    res.json(ret.data.response);
-  }
 }
 

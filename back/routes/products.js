@@ -12,5 +12,6 @@ router.post('/product',ctrlProduct.getProductId);
 // router.post('/addProduct', ctrlProduct.addProduct);
 
 router.get('/product/reviews', ctrlReview.getReviews);
+router.post('/product/addReview', ctrlReview.addReview);
 
 module.exports = router;

@@ -50,6 +50,9 @@ async function callSmartContractFunction(network, address, fctName, params) {
   return res;
 }
 
+
+
+
 module.exports = {
   readSmartContractFunction,
   callSmartContractFunction,

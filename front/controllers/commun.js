@@ -138,3 +138,16 @@ export async function postProduct(data) {
   const response = await MyAPIPost.post('/addProduct', data);
   return response.data;
 }
+
+
+
+export async function addReviews(review, id) {
+  console.log("body front before req add review : ", review, id);
+  const response = await MyAPIPost.post('/product/addReview', {
+    id: id,
+    review: review
+  });
+  console.log("response front : ", response);
+
+  return response.data;
+}
