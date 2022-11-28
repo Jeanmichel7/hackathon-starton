@@ -258,11 +258,13 @@ module.exports = {
       console.log("new", newReview, "rev", reviewobj)
       if (reviewobj == undefined)
         reviewobj = {}
+      console.log("after" ,reviewobj)
       addReview(reviewobj, newReview)
       let upload = await uploadToIpfs('cid.json', reviewobj)
       let param = [id, upload.data.cid, hashcid]
       let res1 = await callSmartContractFunction('binance-testnet', scAddress, "setAllCID", param);
       let res2 = await callSmartContractFunction('binance-testnet', scAddress, "sendRewardFromPool", [wallet, id]);
+      console.log("good review", res1, res2)
   }
 }
 

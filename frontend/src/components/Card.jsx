@@ -156,7 +156,7 @@ form: {
     return res;
   }
 
-  async function upRev(pwd, newReview, cid, id, hashobj, wallet) {
+  async function upRev(pwd, newReview, reviewobj, id, hashobj, wallet) {
     const instance = axios.create({
       baseURL: 'http://localhost:4242',
     });
@@ -164,7 +164,7 @@ form: {
     let ret = await instance.post('/product/uploadReview', {
       pwd: pwd,
       newReview: newReview,
-      cid: cid,
+      reviewobj: reviewobj,
       id: id,
       hashobj: hashobj,
       wallet: wallet
@@ -210,6 +210,8 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
     const consRef = useRef('')
     let hashobj = {}
     let reviewobj = {};
+
+
     const sendValue = async () => {
       hashobj= await getIpfsData(hashCID);
       let date1 = new Date();
@@ -222,7 +224,7 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
     hour: 'numeric',
     minute: 'numeric',
     second: 'numeric'});
-      if (reviewsCID = "")
+      if (reviewsCID != "")
       {
         let res = await getIpfsData(reviewsCID);
         console.log("respons",res)
@@ -251,7 +253,7 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
       <CardActionArea className={classes.cardArea} onClick={handleClickOpen}>
         <CardMedia
           component="img"
-          image={require('../assets/iphone.png')}
+          image={imageCID}
           alt="iphone"
           className={classes.cardMedia}
         />
@@ -262,7 +264,7 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
           <Typography variant="body2" color="text.secondary" className={classes.cardDescription}>
             {details}
           </Typography>
-          <Rating name="read-only" value={4} readOnly className={classes.rating}/>
+          <Rating name="read-only" value={0} readOnly className={classes.rating}/>
           <div className={classes.displayReward}>
             <Typography variant="body2" className={classes.cardReward}>
               REWARD
@@ -381,12 +383,14 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
                classes: { notchedOutline: classes.searchOutline }}}
             className={classes.searchField} 
             />
+            <div className={classes.displayReward}>
               <Rating
         name="simple-controlled"
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
+        className={classes.rating}
         
       />
              <Button
@@ -398,6 +402,7 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
             >
             Add Review
             </Button>
+      </div>
           </DialogContentText>
         </DialogContent>
         </div>
