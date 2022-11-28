@@ -43,9 +43,9 @@ const Header = () => {
           <AppBar position="static" className={classes.bar}>
             <Toolbar>
               <Typography className={classes.fonth4} component="div" sx={{ flexGrow: 1 }}>
-                FAITHFUL
+                FAITHFUL REVIEWS
               </Typography>
-              <Button color="inherit" className={classes.fonth6} onClick={() => dispatch(loadWalletAsync())}>Connect Wallet</Button>
+              {!wallet ? <Button color="inherit" className={classes.fonth6} onClick={() => dispatch(loadWalletAsync())}>Connect Wallet</Button> : <div>{wallet.ffulBalance} FFUL</div>}
             </Toolbar>
           </AppBar>
         </Box>

@@ -11,7 +11,7 @@ const http = axios.create({
 })
 
 const ipfs = axios.create({
-  baseURL: "https://ipfs.eu.starton.io",
+  baseURL: "https://ipfs.eu.starton.io/ipfs/",
   headers: {},
 })
 

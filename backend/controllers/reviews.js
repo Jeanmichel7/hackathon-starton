@@ -98,12 +98,12 @@ async function removeHash(pwd, cid)
 async function validHash(hashobject, passwd) {
   let rvalue = false;
 
-  // const buf = await crypto.subtle.digest("SHA-256", new TextEncoder("utf-8").encode(passwd));
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder("utf-8").encode(passwd));
   
-  const { createHmac } = await import('node:crypto');
-  const secret = 'abcdefg';
-  const buf = createHmac('sha256', secret).update('I love cupcakes').digest('hex');
-  // console.log(buf);
+  // const { createHmac } = await import('node:crypto');
+  // const secret = 'abcdefg';
+  // const buf = createHmac('sha256', secret).update('I love cupcakes').digest('hex');
+  console.log(buf);
   
   let testhash = Array.prototype.map.call(new Uint8Array(buf), x=>(('00'+x.toString(16)).slice(-2))).join('');
 
@@ -121,7 +121,7 @@ async function getIpfsData(cid) {
   console.log("cid : ", cid);
   const res = await ipfs.get(cid)
   .catch(function (error) { return error; });
-  console.log("getipfsdata : ", res.data);
+  console.log("getipfsdata : ", res);
   return res;
 }
 
@@ -144,7 +144,7 @@ async function uploadReview(pwd, newReview, cid, id, oldCid, wallet)
     reviews = Data.data
     console.log("res get review ipfsdata : ", reviews);
   }
-  // addReview(reviews, newReview)
+  addReview(reviews, newReview)
   let upload = await uploadToIpfs('cid.json', reviews)
   let param = [id, upload.data.cid, hashcid]
   await callSmartContractFunction('binance-testnet', scAddress, "setAllCID", param);
@@ -250,6 +250,41 @@ module.exports = {
 
 
 
+  },
+
+  uploadReview: async(req, res) => {
+    console.log("req body : ", req.body);
+
+    let pwd = req.body.pwd;
+    let newReview = req.body.newReview;
+    let cid = req.body.cid;
+    let id = req.body.id;
+    let oldCid = req.body.oldCid;
+    let wallet = req.body.wallet;
+
+
+      let hashcid = await removeHash(pwd, oldCid);
+      if (hashcid == 0)
+        return
+      let reviews;
+
+      //function call to get ProductCID
+      if(cid == "") {
+        console.log("vide")
+        reviews = {}
+      } 
+      else {
+        let Data = await getIpfsData(cid)
+        reviews = Data.data
+        console.log("res get review ipfsdata : ", reviews);
+      }
+      addReview(reviews, newReview)
+      let upload = await uploadToIpfs('cid.json', reviews)
+      let param = [id, upload.data.cid, hashcid]
+      await callSmartContractFunction('binance-testnet', scAddress, "setAllCID", param);
+      await callSmartContractFunction('binance-testnet', scAddress, "sendRewardFromPool", [wallet, id]);
+
+    
   }
 }
 

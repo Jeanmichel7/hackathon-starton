@@ -63,7 +63,7 @@ const Reviews = () => {
   return (
     <Paper variant="outlined" className={classes.reviewBox} >
     <div className={classes.displayReward}>
-        <p>Salut</p>
+        <div>Salut</div>
         <Rating name="read-only" value={4} readOnly className={classes.rating}/>
     </div> 
     <TextField

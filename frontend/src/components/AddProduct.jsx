@@ -1,4 +1,5 @@
 import React, {useRef} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {createUseStyles} from 'react-jss'
 import MuiCard from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -99,29 +100,32 @@ searchOutline: {
     return ret.data
   }
   
-  async function addProduct(name, details, imageCID) {
+  async function addProduct(web3, name, details, imageCID) {
     let hashCID = await getHashCid(name);
-    SCaddProduct(name, details, imageCID, hashCID);
+    SCaddProduct(web3, name, details, imageCID, hashCID);
   }
 const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) => {
     const classes = useStyles()
 
     const [open, setOpen] = React.useState(false);
+ 
+    const { isLoading, wallet, errorMessage } = useSelector(state => state.wallet);
 
     const handleClickOpen = () => {
       setOpen(true);
     };
-  
+
     const handleClose = () => {
       setOpen(false);
     };
 
+   
     const nameRef = useRef('')
     const detailsRef = useRef('')
     const imageRef = useRef('')
 
     const sendValue = async () => {
-        await addProduct(nameRef.current.value, detailsRef.current.value, imageRef.current.value);
+        await addProduct(wallet, nameRef.current.value, detailsRef.current.value, imageRef.current.value);
         handleClose();
 
     }

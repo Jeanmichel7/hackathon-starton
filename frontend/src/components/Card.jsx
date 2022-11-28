@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import {createUseStyles} from 'react-jss'
 import MuiCard from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -13,7 +14,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
-
+import TextField from '@mui/material/TextField';
+import axios from 'axios'
 
 import Reviews from './Reviews';
 
@@ -93,17 +95,82 @@ const useStyles = createUseStyles({
       },
       rating: {
         color: 'rgb(238, 238, 255)'
-      }
+      },
+searchField: {
+  width: '98%',
+  height: '150px',
+  marginLeft: '25px',
+  marginTop: '20px',
+  borderRadius: '30px',
+},
+searchLabel: {
+  color: 'rgb(238, 238, 255)',
+  fontFamily: 'Quicksand',
+  fontSize: '35px'
+},
+searchOutline: {
+  borderColor: 'rgb(238, 238, 255)',
+  '&:hover': {
+      borderColor: 'rgb(238, 238, 255)',
+  },
+  height: '150px',
+  borderRadius: '30px',
+  borderWidth: 5,
+},
+form: {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  height: '100%'
+},addButton: {
+  backgroundColor: 'rgb(238, 238, 255)',
+  opacity: 1,
+  '&:hover': {
+    backgroundColor: 'rgb(238, 238, 255)',
+    opacity: '0.7',
+  },
+  fontFamily: 'Quicksand',
+  color: 'rgb(104, 33, 125)',
+  borderRadius: '30px',
+  marginTop: '100px',
+  fontSize: '25px'
+},
   })
 
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
+
+
+  async function upRev(pwd, newReview, cid, id, oldCid, wallet) {
+    const instance = axios.create({
+      baseURL: 'http://localhost:4242',
+    });
+
+    let ret = await instance.post('/product/uploadReview', {
+      pwd: pwd,
+      newReview: newReview,
+      cid: cid,
+      id: id,
+      oldCid: oldCid,
+      wallet: wallet
+    });
+    console.log("ret getpwd : ", ret.data);
+    return ret.data
+  }
+
+
+
+
+
+
 const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) => {
     const classes = useStyles()
 
     const [open, setOpen] = React.useState(false);
+    const [value, setValue] = React.useState(4);
+    const { isLoading, wallet, errorMessage } = useSelector(state => state.wallet);
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -112,6 +179,29 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
     const handleClose = () => {
       setOpen(false);
     };
+
+    const [openD, setOpenD] = React.useState(false);
+
+    const handleClickOpenD = () => {
+      setOpenD(true);
+      setOpen(false);
+    };
+
+    const handleCloseD = () => {
+      setOpenD(false);
+    };
+
+    const pwdRef = useRef('')
+    const prosRef = useRef('')
+    const consRef = useRef('')
+
+    const sendValue = async () => {
+      upRev(pwdRef.current.value, {"rating":value, "pros":prosRef.current.value, "cons":consRef.current.value}, reviewsCID, id, hashCID, wallet.pubAddr);
+      handleCloseD();
+
+  }
+
+
 
   return (
     <div>
@@ -159,7 +249,7 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
         }}
       >
         <DialogTitle className={classes.dialog}>{"User Reviews About The Product"}
-          <Button className={classes.reviewButton}>
+          <Button className={classes.reviewButton} onClick={handleClickOpenD}>
             WRITE A REVIEW
           </Button>
         </DialogTitle>
@@ -180,6 +270,103 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
           <Reviews />
           </DialogContentText>
         </DialogContent>
+      </Dialog>
+      <Dialog
+        open={openD}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleCloseD}
+        aria-describedby="alert-dialog-slide-description"
+        PaperProps={{
+          style: {
+            backgroundColor: 'rgb(104, 33, 125)',
+            borderRadius: '20px',
+            height: '800px',
+            width: '1400px',
+            maxWidth: '1400px'
+          }
+        }}
+      > 
+        <div className={classes.form}>
+        <DialogTitle className={classes.dialog}>{"Write Your Review"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            <Rating
+        name="simple-controlled"
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        
+      />
+      <TextField
+            id='outlined-textarea'
+            label='password'
+            placeholder='Password'
+            multiline
+            variant='outlined'
+            inputRef={pwdRef}
+            InputLabelProps={{
+              classes : {root: classes.searchLabel}
+            }}
+            InputProps={{
+              style: {
+                  color: 'rgb(238, 238, 255)',
+                  fontFamily: 'Quicksand',
+                  fontSize: '35px'
+               },
+               classes: { notchedOutline: classes.searchOutline }}}
+            className={classes.searchField} 
+            />
+            <TextField
+            id='outlined-textarea'
+            label='pros'
+            placeholder='Write your pros'
+            multiline
+            variant='outlined'
+            inputRef={prosRef}
+            InputLabelProps={{
+              classes : {root: classes.searchLabel}
+            }}
+            InputProps={{
+              style: {
+                  color: 'rgb(238, 238, 255)',
+                  fontFamily: 'Quicksand',
+               },
+               classes: { notchedOutline: classes.searchOutline }}}
+            className={classes.searchField} 
+            />
+            <TextField
+            id='outlined-textarea'
+            label='cons'
+            placeholder='Write your cons'
+            multiline
+            variant='outlined'
+            inputRef={consRef}
+            InputLabelProps={{
+              classes : {root: classes.searchLabel}
+            }}
+            InputProps={{
+              style: {
+                  color: 'rgb(238, 238, 255)',
+                  fontFamily: 'Quicksand' 
+               },
+               classes: { notchedOutline: classes.searchOutline }}}
+            className={classes.searchField} 
+            />
+             <Button
+            variant='contained'
+            color='primary'
+            size='small'
+            onClick={sendValue}
+            className={classes.addButton}
+            >
+            Add Review
+            </Button>
+          </DialogContentText>
+        </DialogContent>
+        </div>
       </Dialog>
       </div>
   )

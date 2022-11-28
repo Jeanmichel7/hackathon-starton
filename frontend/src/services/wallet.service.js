@@ -16,6 +16,7 @@ export async function SCgetFFULBalance(web3Obj) {
 }
 
 export async function SCaddProduct(web3Obj, name, details, imageCID, hashCID) {
+	console.log(name)
 	if (name.length < 3 || name.length > 24) {
 		console.log("Product name must be between 3 and 24 characters");
 		return false;
@@ -59,7 +60,7 @@ export async function initWeb3() {
 	web3Obj.pubAddr = await web3Obj.signer.getAddress();
 	web3Obj.contractAddr = contractAddr;
 	web3Obj.contract = new ethers.Contract(web3Obj.contractAddr, ABI, web3Obj.signer);
-	web3Obj.ffulBalance = SCgetFFULBalance(web3Obj);
+	web3Obj.ffulBalance = await SCgetFFULBalance(web3Obj);
 	console.log(web3Obj);
 	return web3Obj;
 }
