@@ -17,7 +17,7 @@ import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import { SCaddProduct } from '../services/wallet.service'
 import axios from 'axios';
-
+import { loadProductsAsync } from '../redux/reducers/products/products';
 
 import Reviews from './Reviews';
 
@@ -106,7 +106,7 @@ searchOutline: {
   }
 const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) => {
     const classes = useStyles()
-
+    const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
  
     const { isLoading, wallet, errorMessage } = useSelector(state => state.wallet);
@@ -127,6 +127,7 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
     const sendValue = async () => {
         await addProduct(wallet, nameRef.current.value, detailsRef.current.value, imageRef.current.value);
         handleClose();
+        dispatch(loadProductsAsync())
 
     }
 

@@ -16,6 +16,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import axios from 'axios'
+import { loadProductsAsync } from '../redux/reducers/products/products';
 
 import Reviews from './Reviews';
 import { useEffect } from 'react';
@@ -179,6 +180,7 @@ form: {
 
 const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) => {
     const classes = useStyles()
+    const dispatch = useDispatch();
 
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(4);
@@ -228,6 +230,7 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
       }
       upRev(pwdRef.current.value, {"rating":value, "pros":prosRef.current.value, "cons":consRef.current.value, "date":dateLocale}, reviewobj, id, hashobj.data, wallet.pubAddr);
       handleCloseD();
+      dispatch(loadProductsAsync())
 
   }
   const [fetchedData, setFetchedData] = React.useState([]);
@@ -323,14 +326,6 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            <Rating
-        name="simple-controlled"
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        
-      />
       <TextField
             id='outlined-textarea'
             label='password'
@@ -386,6 +381,14 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
                classes: { notchedOutline: classes.searchOutline }}}
             className={classes.searchField} 
             />
+              <Rating
+        name="simple-controlled"
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        
+      />
              <Button
             variant='contained'
             color='primary'
