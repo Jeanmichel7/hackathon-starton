@@ -220,11 +220,13 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
     hour: 'numeric',
     minute: 'numeric',
     second: 'numeric'});
-      if (reviewsCID)
+      if (reviewsCID = "")
       {
-        reviewobj = await getIpfsData(reviewsCID);
+        let res = await getIpfsData(reviewsCID);
+        console.log("respons",res)
+        reviewobj = res.data
       }
-      upRev(pwdRef.current.value, {"rating":value, "pros":prosRef.current.value, "cons":consRef.current.value, "date":dateLocale}, reviewobj.data, id, hashobj.data, wallet.pubAddr);
+      upRev(pwdRef.current.value, {"rating":value, "pros":prosRef.current.value, "cons":consRef.current.value, "date":dateLocale}, reviewobj, id, hashobj.data, wallet.pubAddr);
       handleCloseD();
 
   }

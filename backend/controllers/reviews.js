@@ -94,7 +94,7 @@ async function validHash(hashobject, passwd) {
   console.log(buf);
   
   let testhash = Array.prototype.map.call(new Uint8Array(buf), x=>(('00'+x.toString(16)).slice(-2))).join('');
-
+  console.log("vue",hashobject)
   Object.keys(hashobject).forEach(key => {
     if (testhash == hashobject[key]) {
       rvalue = true;
@@ -255,8 +255,11 @@ module.exports = {
       let hashcid = await removeHash(pwd, hashobj);
       if (hashcid == 0)
         return
+      console.log("new", newReview, "rev", reviewobj)
+      if (reviewobj == undefined)
+        reviewobj = {}
       addReview(reviewobj, newReview)
-      let upload = await uploadToIpfs('cid.json', reviews)
+      let upload = await uploadToIpfs('cid.json', reviewobj)
       let param = [id, upload.data.cid, hashcid]
       let res1 = await callSmartContractFunction('binance-testnet', scAddress, "setAllCID", param);
       let res2 = await callSmartContractFunction('binance-testnet', scAddress, "sendRewardFromPool", [wallet, id]);
