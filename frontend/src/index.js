@@ -6,34 +6,16 @@ import UsersPage from './pages/UsersPage';
 import ProductsPage from './pages/ProductsPage';
 import './index.css'
 import Header from './components/Header';
-import ProductsContainer from './containers/ProductsContainer';
 import SectionSeparator from './components/SectionSeparator';
 import axios from 'axios';
+import SearchBar from './components/SearchBar';
 
 /* to move */
-import { SCaddProduct } from './services/wallet.service'
 
 
 const store = configureStore();
 
-async function getHashCid(name) {
-  const instance = axios.create({
-    baseURL: 'http://localhost:4242',
-  });
-  let ret = await instance.post('/generatePwd', {
-    name: name
-  });
-  console.log("ret getpwd : ", ret);
-  return ret.data
-}
 
-async function addProduct() {
-  let name = "TEMP NAME";
-  let details = "TEMP DETAILSQWERTYUIOP";
-  let imageCID = "IMAGE RECUPERER DE GLISSER DEPOSER";
-  let hashCID = await getHashCid(name);
-  SCaddProduct(name, details, imageCID, hashCID);
-}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -41,9 +23,9 @@ root.render(
     <Provider store={store}>
       <Header />
       <SectionSeparator name="PRODUCTS"/>
+      <SearchBar />
 
-
-      <button onClick={addProduct} value={1}>Genereate pass</button>
+      {/* <button onClick={addProduct} value={1}>Genereate pass</button> */}
 
 
       <ProductsPage />

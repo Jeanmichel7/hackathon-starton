@@ -13,7 +13,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
-import TextField from '@mui/material/TextField';
+
 
 import Reviews from './Reviews';
 
@@ -21,8 +21,8 @@ const useStyles = createUseStyles({
     card: {
         backgroundColor: 'rgb(104, 33, 125)',
         margin: '20px',
-        width: '300px',
-        height: '500px',
+        width: '330px',
+        height: '550px',
         borderRadius: '25px'
     },
     cardArea: {
@@ -30,11 +30,11 @@ const useStyles = createUseStyles({
         flexDirection : 'column',
         textAlign: 'center',
         "-webkit-justify-content": 'space-between',
-        height: '500px'
+        height: '550px'
     },
     cardMedia: {
         height:'280px',
-        width:'300px',
+        width:'330px',
         padding: '10px',
         borderRadius: '25px'
       },

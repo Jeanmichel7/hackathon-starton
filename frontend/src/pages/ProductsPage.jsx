@@ -5,7 +5,8 @@ import Card from '../components/Card';
 import Container from '@mui/material/Container'
 import {createUseStyles} from 'react-jss'
 import { sizing } from '@mui/system';
-//import AddProductCard from '../components/AddProductCard'
+import { Button } from '@mui/material';
+import AddProduct from '../components/AddProduct'
 
 const useStyles = createUseStyles({
   hero: {
@@ -21,7 +22,8 @@ const useStyles = createUseStyles({
       justifyContent: 'center',
       backgroundColor: 'rgba(21, 21, 21, 0.05)',
       borderRadius: '20px',
-      marginBottom: '35px'
+      marginBottom: '60px',
+      marginTop: '30px'
   },
   containerDown: {
     display:'flex',
@@ -31,7 +33,22 @@ const useStyles = createUseStyles({
     justifyContent: 'center',
     backgroundColor: 'rgb(104, 33, 125)',
     borderRadius: '20px',
-}
+},
+reviewButton: {
+  backgroundColor: 'rgb(238, 238, 255)',
+  opacity: 1,
+  '&:hover': {
+    backgroundColor: 'rgb(238, 238, 255)',
+    opacity: '0.7',
+  },
+  fontFamily: 'Quicksand',
+  color: 'rgb(104, 33, 125)',
+  height: '100px',
+  width: '400px',
+  borderRadius: '30px',
+  marginTop: '100px',
+  fontSize: '25px'
+},
 })
 
 
@@ -66,7 +83,7 @@ const ProductsPage = () => {
     {/* <AddProductCard /> */}
     </Container>
     <Container className={classes.containerDown}>
-
+      <AddProduct />
     </Container>
     </Container>
   )
