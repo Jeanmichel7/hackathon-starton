@@ -1,4 +1,4 @@
-import {setupMetamask} from '../../../services/wallet.service'
+import {initWeb3} from '../../../services/wallet.service'
 
 let initialStates = {
     isLoading: false,
@@ -59,9 +59,9 @@ export const walletReducer = (state = initialStates, { type, payload }) => {
 export const loadWalletAsync = () => (dispatch) => {
     dispatch(walletLoadStart());
 
-    setupMetamask()
-        .then((response) => dispatch(walletLoadSuccess(response.data)))
-        .catch((error) => dispatch(walletLoadError(error.meesage)));
+    initWeb3()
+        .then((response) => dispatch(walletLoadSuccess(response)))
+        .catch((error) => dispatch(walletLoadError(error.message)));
 }
 
 export default {
