@@ -141,9 +141,20 @@ form: {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
+  const ipfs = axios.create({
+    baseURL: "https://ipfs.eu.starton.io/ipfs/",
+    headers: {},
+  })
+  
+  async function getIpfsData(cid) {
+    console.log("cid : ", cid);
+    const res = await ipfs.get(cid)
+    .catch(function (error) { return error; });
+    console.log("getipfsdata : ", res);
+    return res;
+  }
 
-
-  async function upRev(pwd, newReview, cid, id, oldCid, wallet) {
+  async function upRev(pwd, newReview, cid, id, hashobj, wallet) {
     const instance = axios.create({
       baseURL: 'http://localhost:4242',
     });
@@ -153,7 +164,7 @@ form: {
       newReview: newReview,
       cid: cid,
       id: id,
-      oldCid: oldCid,
+      hashobj: hashobj,
       wallet: wallet
     });
     console.log("ret getpwd : ", ret.data);
@@ -194,9 +205,11 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
     const pwdRef = useRef('')
     const prosRef = useRef('')
     const consRef = useRef('')
-
+    let hashobj = {}
     const sendValue = async () => {
-      upRev(pwdRef.current.value, {"rating":value, "pros":prosRef.current.value, "cons":consRef.current.value}, reviewsCID, id, hashCID, wallet.pubAddr);
+      hashobj= await getIpfsData(hashCID);
+      console.log(hashobj.data);
+      upRev(pwdRef.current.value, {"rating":value, "pros":prosRef.current.value, "cons":consRef.current.value}, reviewsCID, id, hashobj.data, wallet.pubAddr);
       handleCloseD();
 
   }

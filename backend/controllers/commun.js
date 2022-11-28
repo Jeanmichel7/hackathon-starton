@@ -1,8 +1,9 @@
 const axios = require('axios');
+let scAddress = process.env.SC_ADDRESS;
 
 /* instance axios */
 const http = axios.create({
-  baseURL: "https://api.starton.io/v2",
+  baseURL: "https://api.starton.io/v3",
   headers: {
     "x-api-key": process.env.API_KEY,
     "Content-Type": "application/json",
@@ -25,7 +26,7 @@ const httpA = axios.create({
 })
 
 const httpB = axios.create({
-  baseURL: "https://api.starton.io/v2",
+  baseURL: "https://api.starton.io/v3",
   headers: {
     "x-api-key": process.env.API_KEY,
     "Access-Control-Allow-Origin": "*"
@@ -38,15 +39,19 @@ async function readSmartContractFunction(network, address, fctName, params) {
     "params": params
   })
   .catch(function (error) { return error; });
+  console.log("owner : ", res.data.response)
   return res;
 }
 
 async function callSmartContractFunction(network, address, fctName, params) {
+  let owner = await readSmartContractFunction('binance-testnet', scAddress, "owner", []);
   const res = await http.post("/smart-contract/" + network + "/" + address + "/call", {
     "functionName": fctName,
-    "params": params
+    "params": params,
+    "signerWallet": owner.data.response
   })
   .catch(function (error) { return error; });
+  console.log(owner.data.response)
   return res;
 }
 

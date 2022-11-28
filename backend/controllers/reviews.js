@@ -2,20 +2,10 @@ const scAddress = process.env.SC_ADDRESS;
 const crypto = require('node:crypto');
 const {ipfs, 
   readSmartContractFunction,
-  callSmartContractFunction
+  callSmartContractFunction,
+  uploadToIpfs
 } = require('../controllers/commun');
 
-
-
-async function uploadToIpfs(filename, jsonobj) {
-  const res = await ipfs.post("/ipfs/json", {
-    "name" : filename,
-    "content" : jsonobj
-  })
-  .catch(function (error) { return error; });
-  // console.log(res);
-  return res;
-}
 
 async function addHash(id, cid) {
   let pwd = await genPassAndHash();
@@ -77,10 +67,8 @@ async function getHash(index) {
   return hash;
 }
 
-async function removeHash(pwd, cid)
+async function removeHash(pwd, hashobj)
 {
-  let Data = await getIpfsData(cid)
-  let hashobj = Data.data
   let valid = await validHash(hashobj, pwd)
   if ( valid == true)
   {
@@ -147,8 +135,9 @@ async function uploadReview(pwd, newReview, cid, id, oldCid, wallet)
   addReview(reviews, newReview)
   let upload = await uploadToIpfs('cid.json', reviews)
   let param = [id, upload.data.cid, hashcid]
-  await callSmartContractFunction('binance-testnet', scAddress, "setAllCID", param);
-  await callSmartContractFunction('binance-testnet', scAddress, "sendRewardFromPool", [wallet, id]);
+  let res = await callSmartContractFunction('binance-testnet', scAddress, "setAllCID", param);
+  let res2 = await callSmartContractFunction('binance-testnet', scAddress, "sendRewardFromPool", [wallet, id]);
+  console.log(res,res2, "valid")
 }
 
 
@@ -259,11 +248,11 @@ module.exports = {
     let newReview = req.body.newReview;
     let cid = req.body.cid;
     let id = req.body.id;
-    let oldCid = req.body.oldCid;
+    let hashobj = req.body.hashobj;
     let wallet = req.body.wallet;
 
 
-      let hashcid = await removeHash(pwd, oldCid);
+      let hashcid = await removeHash(pwd, hashobj);
       if (hashcid == 0)
         return
       let reviews;
@@ -281,9 +270,10 @@ module.exports = {
       addReview(reviews, newReview)
       let upload = await uploadToIpfs('cid.json', reviews)
       let param = [id, upload.data.cid, hashcid]
-      await callSmartContractFunction('binance-testnet', scAddress, "setAllCID", param);
-      await callSmartContractFunction('binance-testnet', scAddress, "sendRewardFromPool", [wallet, id]);
-
+      let res1 = await callSmartContractFunction('binance-testnet', scAddress, "setAllCID", param);
+      let res2 = await callSmartContractFunction('binance-testnet', scAddress, "sendRewardFromPool", [wallet, id]);
+      console.log(res1,res2, "valid")
+      console.log('valid review')
     
   }
 }

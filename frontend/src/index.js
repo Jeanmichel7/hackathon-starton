@@ -24,7 +24,6 @@ root.render(
       <Header />
       <SectionSeparator name="PRODUCTS"/>
       <SearchBar />
-
       {/* <button onClick={addProduct} value={1}>Genereate pass</button> */}
 
 
