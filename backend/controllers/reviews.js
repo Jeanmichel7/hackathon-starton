@@ -246,7 +246,7 @@ module.exports = {
 
     let pwd = req.body.pwd;
     let newReview = req.body.newReview;
-    let cid = req.body.cid;
+    let reviewobj = req.body.reviewobj;
     let id = req.body.id;
     let hashobj = req.body.hashobj;
     let wallet = req.body.wallet;
@@ -255,26 +255,11 @@ module.exports = {
       let hashcid = await removeHash(pwd, hashobj);
       if (hashcid == 0)
         return
-      let reviews;
-
-      //function call to get ProductCID
-      if(cid == "") {
-        console.log("vide")
-        reviews = {}
-      } 
-      else {
-        let Data = await getIpfsData(cid)
-        reviews = Data.data
-        console.log("res get review ipfsdata : ", reviews);
-      }
-      addReview(reviews, newReview)
+      addReview(reviewobj, newReview)
       let upload = await uploadToIpfs('cid.json', reviews)
       let param = [id, upload.data.cid, hashcid]
       let res1 = await callSmartContractFunction('binance-testnet', scAddress, "setAllCID", param);
       let res2 = await callSmartContractFunction('binance-testnet', scAddress, "sendRewardFromPool", [wallet, id]);
-      console.log(res1,res2, "valid")
-      console.log('valid review')
-    
   }
 }
 

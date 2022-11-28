@@ -58,18 +58,18 @@ const useStyles = createUseStyles({
       },
   })
 
-const Reviews = () => {
+const Reviews = ({review}) => {
     const classes = useStyles()
   return (
     <Paper variant="outlined" className={classes.reviewBox} >
     <div className={classes.displayReward}>
-        <div>Salut</div>
-        <Rating name="read-only" value={4} readOnly className={classes.rating}/>
+        <div>{review.date}</div>
+        <Rating name="read-only" value={review.rating} readOnly className={classes.rating}/>
     </div> 
     <TextField
           id="outlined-read-only-input"
           label="Pros"
-          defaultValue="Hello World"
+          defaultValue={review.pros}
           InputLabelProps={{
             classes : {root: classes.prosLabel}
           }}
@@ -86,7 +86,7 @@ const Reviews = () => {
     <TextField
           id="outlined-read-only-input"
           label="Cons"
-          defaultValue="Hello World"
+          defaultValue={review.cons}
           InputLabelProps={{
             classes : {root: classes.consLabel}
           }}

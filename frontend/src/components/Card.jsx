@@ -18,6 +18,7 @@ import TextField from '@mui/material/TextField';
 import axios from 'axios'
 
 import Reviews from './Reviews';
+import { useEffect } from 'react';
 
 const useStyles = createUseStyles({
     card: {
@@ -206,18 +207,41 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
     const prosRef = useRef('')
     const consRef = useRef('')
     let hashobj = {}
+    let reviewobj = {};
     const sendValue = async () => {
       hashobj= await getIpfsData(hashCID);
-      console.log(hashobj.data);
-      upRev(pwdRef.current.value, {"rating":value, "pros":prosRef.current.value, "cons":consRef.current.value}, reviewsCID, id, hashobj.data, wallet.pubAddr);
+      let date1 = new Date();
+
+    let dateLocale = date1.toLocaleString('fr-FR',{
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'});
+      if (reviewsCID)
+      {
+        reviewobj = await getIpfsData(reviewsCID);
+      }
+      upRev(pwdRef.current.value, {"rating":value, "pros":prosRef.current.value, "cons":consRef.current.value, "date":dateLocale}, reviewobj.data, id, hashobj.data, wallet.pubAddr);
       handleCloseD();
 
   }
-
+  const [fetchedData, setFetchedData] = React.useState([]);
+  useEffect(() => {
+    const getData = async () => {
+      let data = await getIpfsData(reviewsCID);
+      setFetchedData(data);
+    };
+    getData();
+  }, []);
 
 
   return (
     <div>
+      
+      {/* {reviewobj && Object.entries(console.log(reviewobj))} */}
     <MuiCard sx={{ maxWidth: 345 }} className={classes.card}>
       <CardActionArea className={classes.cardArea} onClick={handleClickOpen}>
         <CardMedia
@@ -269,18 +293,10 @@ const Card = ({id, name, details, imageCID, reviewsCID, hashCID, tokenPool }) =>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
-          <Reviews />
-          <Reviews />
-          <Reviews />
-          <Reviews />
-          <Reviews />
-          <Reviews />
-          <Reviews />
-          <Reviews />
-          <Reviews />
-          <Reviews />
-          <Reviews />
-          <Reviews />
+            {fetchedData.data && Object.values(fetchedData.data).map((item,user) => (
+            <Reviews key={user} review={item} />
+            ))}
+          {/* <Reviews review={{"rating":4, "pros":"dsfafa", "cons": "dasfafafawef"}}/> */}
           </DialogContentText>
         </DialogContent>
       </Dialog>
